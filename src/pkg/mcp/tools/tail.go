@@ -60,8 +60,9 @@ func handleLogsTool(ctx context.Context, request mcp.CallToolRequest, cluster st
 	until := request.GetString("until", "")
 	sinceTime, err := time.Parse(time.RFC3339, since)
 	if err != nil {
-		term.Error("Invalid parameter 'since', must be in RFC3339 format", "error", err)
-		return mcp.NewToolResultErrorFromErr("Invalid parameter 'since', must be in RFC3339 format", err), err
+		var sinceFormatErrMsg := "Invalid parameter 'since', must be in RFC3339 format (e.g. 2023-09-24T15:30:00Z)"
+		term.Error(sinceFormatErrMsg, "error", err)
+		return mcp.NewToolResultErrorFromErr(sinceFormatErrMsg, err), err
 	}
 	untilTime, err := time.Parse(time.RFC3339, until)
 	if err != nil {
