@@ -66,8 +66,9 @@ func handleLogsTool(ctx context.Context, request mcp.CallToolRequest, cluster st
 	}
 	untilTime, err := time.Parse(time.RFC3339, until)
 	if err != nil {
-		term.Error("Invalid parameter 'until', must be in RFC3339 format", "error", err)
-		return mcp.NewToolResultErrorFromErr("Invalid parameter 'until', must be in RFC3339 format", err), err
+		var untilFormatErrMsg := "Invalid parameter 'until', must be in RFC3339 format (e.g. 2023-09-24T15:30:00Z)"
+		term.Error(untilFormatErrMsg, "error", err)
+		return mcp.NewToolResultErrorFromErr(untilFormatErrMsg, err), err
 	}
 
 	err = os.Chdir(wd)
